@@ -78,8 +78,7 @@ public class FileReceiveController {
     /**
      * 解压
      */
-    private void unZip(File dest,String filePath) throws IOException {
+    private static  void unZip(File dest,String filePath) throws IOException {
         UZipUtil.unZipFiles(dest,filePath);
     }
-
 }
