@@ -33,13 +33,25 @@ public class FileReceiveController {
         String fileName = file.getOriginalFilename();
         String filePath = BussinessConfig.getFilePath();
         File dest = new File(filePath + fileName);
+        File path = dest.getParentFile();
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        // 如果文件已存在，覆盖掉？
+        if (dest.exists()) {
+            dest.delete();
+        }
         log.info("文件路径：{}",filePath + fileName);
         try {
-            FileUtil.writeStringToFile(String.valueOf(total),filePath + "total-"+fileName);
+            //记录日志？
+            //FileUtil.writeStringToFile(String.valueOf(total),filePath + "total-"+fileName);
+            //转存
             file.transferTo(dest);
             //unZip 解压
             unZip(dest,filePath);
             log.info("上传成功");
+            //是否删除压缩文件
+            //dest.delete();
             return "上传成功";
         } catch (IOException e) {
             log.error(e.toString(), e);

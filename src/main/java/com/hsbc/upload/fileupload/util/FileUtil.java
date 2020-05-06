@@ -78,13 +78,15 @@ public class FileUtil {
     public static void writeStringToFile(String filePath, String countent) {
         synchronized (FileUtil.class){
             try {
-                File file = new File(filePath.substring(0, filePath.lastIndexOf('/')));
+                int idx = filePath.lastIndexOf('/');
+                File file = new File(filePath.substring(0, idx != -1 ? idx : filePath.length()));
                 if(!file.exists()){file.createNewFile();}
                 FileOutputStream outputStream = new FileOutputStream(new File(filePath));
                 outputStream.write(countent.getBytes());
                 outputStream.close();
             } catch (Exception e) {
                 logger.error("写入文件失败:" + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
